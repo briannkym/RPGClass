@@ -54,7 +54,7 @@ public class TrackPlayer {
     }
 
     public void play(WAV wav){
-    	play(wav, 1);
+    	play(wav, 0);
     }
     
     public void play(WAV wav, int count) {

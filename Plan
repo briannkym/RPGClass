@@ -1,0 +1,68 @@
+Day 1:
+
+-20 minutes questionaire on name, why they're interested, and programming experience.
+-40 minutes explain what the class is, what Java is and what the class shall teach. 
+-30 minutes to do Hello World and compile using the terminal.
+-30 minutes start slightly harder Hello World example that takes argument from the terminal.
+-1 hour short lecture on binary numbers, different types of variables, what they represent, and how they are used.
+
+--break--
+
+-1 hour continue working on the extended Hello World program. Introduce "if" statements. Review print and println methods and special characters.
+-2 hours Introduce scanner class, as well as basic arithmetic for numbers and different number types. Create a basic RPG to practice basic understanding.
+
+-Homework: Write a calculator program that multiplies, divides, adds, or subtracts two numbers. The program should ask the user which operation they want to do. Add extra functionality using the Math class for extra credit.
+
+--Done.
+
+Day 2:
+//Depending on the students level of understanding some students may be given different advanced tasks that will help students learn about a different area in Computer Science while doing similar programming activities with the class.
+-1 hour introduce arrays, loops, and switch-case statements.
+-2 hour continue to develop RPG by giving it a map.
+
+--Break--
+
+-1 hour lecture on methods and references.
+-1 hour practice using methods, and also refactor RPG into methods.
+-30 minute lecture on recursion.
+-30 minute factorial example.
+
+-Homework: Finish RPG example using arrays and loops and get it working if it is unfinished. Extra Credit: implement random numbers into the RPG.
+
+--done--
+Day 3:
+
+-30 minutes switch over to Eclipse IDE. Explain basic functionalities of the IDE.
+-30 minutes import files into Eclipse and practice compiling.
+-1 hour introduce File I/O, and exception handling.
+-1 hour practice File I/O.
+
+--Break--
+
+-1 hour Implement File I/O to save/open maps and games on RPG. 
+-1 hour lecture on scope of variables: private, protected, default, and public. 
+-1 hour Exercise if not done so yet, create more than one class and practice importing.
+
+-Homework: Refactor RPG/finish what was not finished in class. 
+
+Day 4:
+-1 hour graphics demo, and presentation on advanced computer science topic.
+-1 hour introduction to basic GUI
+-1 hour Practice GUI
+
+--break--
+-1 hour introduction to BufferedImages and 2d rendering.
+-2 hours implement basic black and white 2d graphics for rpg.
+
+-Homework: Worksheet on converting binary numbers to decimal numbers and hexadecimal numbers, and interpreting hexadecimal values for colors. Extra Credit: Complete a few extra problems on IP addresses and subnet masks.
+
+Day 5:
+-40 minute review on the homework.
+-1 hour introduction to bitwise operators and ternary operators. 
+-1 hour 20 minutes start implementing color in RPG
+
+--break--
+
+-1 hour 30 minutes continue to put finishing touches on RPG.
+-1 hour lecture on how to create an executable jar so that they can show their final project to friends and family. Introduction to Object Oriented concepts or an introduction to another fun CS topic like encryption or compilers.
+-30 minutes Hand out review sheet. Thank the students for their participation.

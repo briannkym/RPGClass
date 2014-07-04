@@ -60,11 +60,12 @@ public class SimpleWorldIO {
 	public void writeWorld(SimpleWorld w){
 		if (canPrint)
 		{
-			SimpleObject[][] w_arr = w.getMap();
+			SimpleObject[][][] w_arr = w.getMap();
 			pw.write(w_arr.length + "," + w_arr[0].length + "\n");
 			for(int y = 0; y < w_arr.length; y++){
 				for(int x = 0; x < w_arr[0].length; x++){
-					pw.write(swf.getChar(w_arr[x][y]));
+					pw.write(swf.getChar(w_arr[x][y][0]));
+					pw.write(swf.getChar(w_arr[x][y][1]));
 				}
 				pw.write("\n");
 			}
@@ -79,13 +80,17 @@ public class SimpleWorldIO {
 			String line = reader.readLine();
 			String[] dim = line.split(",");
 			w.clear(Integer.parseInt(dim[0]), Integer.parseInt(dim[1]));
-			SimpleObject[][] w_arr = w.getMap();
+			SimpleObject[][][] w_arr = w.getMap();
 			for (int y = 0; y < w_arr.length; y++)
 			{
 				line = reader.readLine();
 				for(int x = 0; x < w_arr[0].length; x++)
 				{
-					w.add(x,y, swf.getSimpleObject(line.charAt(x)));
+					if(x%2 == 0){
+						w.add(x, y, 0, swf.getSimpleObject(line.charAt(x)));
+					} else {
+						w.add(x, y, 1, swf.getSimpleObject(line.charAt(x)));	
+					}
 				}
 			}
 			reader.close();
