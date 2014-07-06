@@ -77,7 +77,7 @@ public class ImgUpload
 
                         for (int x = 0; x < width; x++) {
                             for (int y = 0; y < height; y++) {
-                                bIA[y*x_wid + x] = bI.getSubimage(x * x_wid, y * y_wid, x_wid , y_wid);
+                                bIA[y*width + x] = bI.getSubimage(x * x_wid, y * y_wid, x_wid , y_wid);
                             }
                         }
                         img.put(images[i].getName(), new Animation(bIA));

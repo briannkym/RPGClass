@@ -1,14 +1,15 @@
 package platforms;
 
 import world.SimpleObject;
+import world.SimpleSolid;
 
-public class HighFloor extends SimpleObject{
+public class Key extends SimpleSolid{
 
-	public static final char ID = 10;
+	public static final char ID = 12;
 	
-	public HighFloor() {
-		super(SimpleObject.NO_MOVES);
-		this.setImage("../sprites/isocolors/greenT.png");
+	public Key() {
+		super(true);
+		this.setImage("../sprites/isocolors/greenKey.png");
 	}
 	
 	@Override
@@ -24,7 +25,8 @@ public class HighFloor extends SimpleObject{
 
 	@Override
 	public void update() {
-			
+		// TODO Auto-generated method stub
+		
 	}
 
 }

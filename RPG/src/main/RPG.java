@@ -4,7 +4,7 @@ import player.*;
 import world.*;
 
 public class RPG {
-	SimpleWorld w;
+	SimpleWorld w; 
 	Player p;
 	
 	public static void main(String[] args){
@@ -13,10 +13,11 @@ public class RPG {
 	
 	public RPG()
 	{
-		w = new SimpleWorld(new SimpleObject[20][20][2], 20, 20, "Sulyeob");
+		w = new SimpleWorld(20, 20, 16, 16, "Sulyeob");
 		p = new Player();
-		w.add(0, 0, 0, p);
-		w.add(10,10, 0, new SimpleNPC());
+		w.addSimpleObject(p, 0, 0);
+		w.addSimpleObject(new SimpleNPC(), 10, 10);
 		w.addKeyListener(p);
+		w.start(true);
 	}
 }

@@ -2,13 +2,13 @@ package platforms;
 
 import world.SimpleObject;
 
-public class HighFloor extends SimpleObject{
+public class Lock extends SimpleObject{
 
-	public static final char ID = 10;
+	public static final char ID = 13;
 	
-	public HighFloor() {
+	public Lock() {
 		super(SimpleObject.NO_MOVES);
-		this.setImage("../sprites/isocolors/greenT.png");
+		this.setImage("../sprites/isocolors/greenLock.png");
 	}
 	
 	@Override
@@ -24,7 +24,8 @@ public class HighFloor extends SimpleObject{
 
 	@Override
 	public void update() {
-			
+		// TODO Auto-generated method stub
+		
 	}
 
 }

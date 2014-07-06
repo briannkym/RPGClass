@@ -16,11 +16,10 @@ public class SimpleWorldIO {
 	private File f;
 	private PrintWriter pw;
 	private boolean canPrint = false;
-	private SimpleWorldFactory swf;
+	private SimpleWorldFactory swf = SimpleWorldFactory.getInstance();
 	
-	public SimpleWorldIO(String path, SimpleWorldFactory swf)	{
+	public SimpleWorldIO(String path)	{
 		this.f = new File(path);
-		this.swf = swf;
 	}
 	
 	public boolean openWorld() {
@@ -60,13 +59,9 @@ public class SimpleWorldIO {
 	public void writeWorld(SimpleWorld w){
 		if (canPrint)
 		{
-			SimpleObject[][][] w_arr = w.getMap();
-			pw.write(w_arr.length + "," + w_arr[0].length + "\n");
-			for(int y = 0; y < w_arr.length; y++){
-				for(int x = 0; x < w_arr[0].length; x++){
-					pw.write(swf.getChar(w_arr[x][y][0]));
-					pw.write(swf.getChar(w_arr[x][y][1]));
-				}
+			pw.write(w.m.map.length + "," + w.m.map[0].length + "\n");
+			for(SimpleObject o : w.objects){
+				pw.write(swf.getString(o));
 				pw.write("\n");
 			}
 			pw.flush();
@@ -79,25 +74,16 @@ public class SimpleWorldIO {
 			BufferedReader reader = new BufferedReader(new FileReader(f));
 			String line = reader.readLine();
 			String[] dim = line.split(",");
-			w.clear(Integer.parseInt(dim[0]), Integer.parseInt(dim[1]));
-			SimpleObject[][][] w_arr = w.getMap();
-			for (int y = 0; y < w_arr.length; y++)
-			{
-				line = reader.readLine();
-				for(int x = 0; x < w_arr[0].length; x++)
-				{
-					if(x%2 == 0){
-						w.add(x, y, 0, swf.getSimpleObject(line.charAt(x)));
-					} else {
-						w.add(x, y, 1, swf.getSimpleObject(line.charAt(x)));	
-					}
-				}
+			w.clearAll(Integer.parseInt(dim[0]), Integer.parseInt(dim[1]));
+			while((line = reader.readLine())!=null){
+				swf.addSimpleObject(line, w);		
 			}
 			reader.close();
 			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
 							"Error: Couldn't read world.");
+			e.printStackTrace();
 		}
 	}
 	

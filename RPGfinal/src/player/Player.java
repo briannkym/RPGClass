@@ -4,24 +4,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
+import platforms.*;
+
 import sprite.Img;
 import sprite.ImgUpload;
 
 import world.SimpleObject;
+import world.SimpleSolid;
 
-public class Player extends SimpleObject implements KeyListener {
+public class Player extends SimpleSolid implements KeyListener {
 	private Img gN = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlN.png"); 
 	private Img gS = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlS.png"); 
 	private Img gE = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlE.png"); 
 	private Img gW = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlW.png"); 
-	private Img gD = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlDeadS.png"); 
 	private int speed = 10;
 	private int x_dir = 0;
 	private int y_dir = 0;
+	private int[] offset = this.getOffset();
+	public static final char ID = 16;
 	private boolean move = false;
 
 	public Player() {
-		super("../sprites/char1/girlS.png");
+		this.setImage(gS);
 	}
 
 	@Override
@@ -31,6 +35,55 @@ public class Player extends SimpleObject implements KeyListener {
 
 	@Override
 	public void collision(SimpleObject s) {
+		switch(s.id()){
+		case Ramp.NORTH:
+			move = false;
+			offset[1]= -2;
+			this.moveCell(0, 1, 8, true);
+			break;
+		case Ramp.EAST: 
+			move = false;
+			offset[1]= -2;
+			this.moveCell(-1, 0, 8, true);
+			break;
+		case Ramp.WEST:
+			move = false;
+			offset[1]= -2;
+			this.moveCell(1, 0, 8, true);
+			break;
+		case Ramp.SOUTH:
+			move = false;
+			offset[1]= -2;
+			this.moveCell(0, -1, 8, true);
+			break;
+		case Stair.NORTH:
+		case Stair.EAST:
+		case Stair.WEST:
+		case Stair.SOUTH:
+			offset[1]= -2;
+			break;
+		case HighFloor.ID:
+			switch(offset[1]){
+			case 0:
+				this.cancelMove();
+				break;
+			default:
+				offset[1]= -4;
+			}
+			break;
+		case Floor.ID:
+			switch(offset[1]){
+			case -4:
+				this.cancelMove();
+				break;
+			default:
+				offset[1]= 0;
+			}
+			break;
+		case Emptyness.ID:
+			this.cancelMove();
+			break;
+		}
 	}
 
 	@Override
@@ -72,12 +125,11 @@ public class Player extends SimpleObject implements KeyListener {
 			move = true;
 			break;
 		case KeyEvent.VK_SPACE:
-			this.setImage(gD);
 			break;
 		}
 
 		if (x_dir != 0 && y_dir != 0) {
-			speed = 7;
+			speed = 8;
 		}
 	}
 

@@ -1,124 +1,175 @@
 package world;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Comparator;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import sprite.*;
-import view.*;
+import sprite.ColorImg;
+import sprite.Img;
+import sprite.ImgUpload;
+import view.Pinterface;
+import view.Projector;
 
-@SuppressWarnings("serial")
-public class SimpleWorld extends JFrame implements Pinterface {
+public class SimpleWorld extends JFrame implements Pinterface{
 
-	private Img background;
-	private Projector ip;
-	private SimpleObject[][][] map;
-	private final int cellWidth;
-	private final int cellHeight;
-	private SimpleWorldObject swo = NullSimpleWorldObject.getInstance();
-
-	public SimpleWorld(SimpleObject[][][] map, int cellWidth, int cellHeight,
-			String title) {
-		this.cellHeight = cellHeight;
-		this.cellWidth = cellWidth;
-		if (map[0][0].length == 2){
-			this.map = map;
-		}
-		else {
-			this.map = new SimpleObject[map.length][map[0].length][2];
-		}
-		BufferedImage bi = new BufferedImage(map.length * cellWidth,
-				map[0].length * cellHeight, BufferedImage.TYPE_INT_ARGB);
-		this.ip = new Projector(15.0f, bi, title, this);
-		ip.init(this);
-	}
-
-	public void setBackground(String sprite) {
-		File f = new File(sprite);
-		this.background = ImgUpload.getInstance(f.getParentFile()).getImg(
-				f.getName());
-	}
-
-	public void setBackground(Img i) {
-		this.background = i;
-	}
-
-	public SimpleObject getObject(int x, int y, int i) {
-		return map[x][y][i];
-	}
-
-	public boolean destroy(int x, int y, int i) {
-		if (map[x][y][i] == null) {
-			return false;
-		} else {
-			map[x][y][i] = null;
-			return true;
-		}
-	}
-
-	public boolean destroy(SimpleObject o) {
-		for (int x = 0; x < map.length; x++) {
-			for (int y = 0; y < map[x].length; y++) {
-				if (map[x][y][0] == o) {
-					map[x][y][0] = null;
-					return true;
-				} else if (map[x][y][1] == o) {
-					map[x][y][1] = null;
-					return true;
+	List <SimpleObject>objects = new LinkedList<SimpleObject>();
+	List <SimpleObject>addList = new LinkedList<SimpleObject>();
+	List <SimpleObject>removeList = new LinkedList<SimpleObject>();
+	
+	private static Comparator<SimpleObject> c = new Comparator<SimpleObject>(){
+		@Override
+		public int compare(SimpleObject o1, SimpleObject o2) {
+			if(o2.getSolid()!=null){
+				if(o1.getSolid()!=null){
+					return o1.coor_y - o2.coor_y;
 				}
+				else
+				{
+					return -1;
+				}
+			} else if (o1.getSolid()!=null){
+				return 1;
+			} else {
+				return o1.coor_y - o2.coor_y;
 			}
 		}
-		return false;
-	}
+		
+	};
+		
+	private Img background;
+	private Projector ip;
+	private String title;
+	
+	SimpleSolidMap m;
+	private SimpleWorldObject swo = NullSimpleWorldObject.getInstance();
 
-	public boolean add(int x, int y, int i, SimpleObject o) {
-		if (map[x][y][i] != null) {
-			return false;
+	public SimpleWorld(int width, int height, int cellWidth, int cellHeight, String title){
+		m = new SimpleSolidMap(width, height, cellWidth, cellHeight);
+		BufferedImage bi = new BufferedImage(m.map.length * cellWidth,
+				m.map[0].length * cellHeight, BufferedImage.TYPE_INT_ARGB);
+		this.title = title;
+		this.ip = new Projector(20.0f, bi, title ,this);
+	}
+	
+	public void start(boolean fullscreen){
+		if(fullscreen){
+			ip.init(this);
 		} else {
-			int[] m = o.getMovement();
-			m[SimpleObject.X] = x;
-			m[SimpleObject.Y] = y;
-			m[SimpleObject.REL] = 0;
-			m[SimpleObject.TIME] = 0;
-			m[SimpleObject.PREX] = x;
-			m[SimpleObject.PREY] = y;
-			map[x][y][i] = o;
-			return true;
+			Container c = this.getContentPane();
+	        JPanel jp=ip.init(new Dimension(m.map.length * m.cellWidth, m.map[0].length * m.cellHeight));
+	        c.setLayout(new BorderLayout());
+	        c.add(jp, BorderLayout.NORTH);
+	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        this.setTitle(title);
+	        this.setIgnoreRepaint(true);
+	        this.pack();
+	        this.setResizable(false);
+	        this.setVisible(true);
 		}
 	}
-
-	public void clear(int width, int height) {
-		map = new SimpleObject[width][height][2];
+	
+	public boolean addSimpleObject(SimpleObject o, int x, int y){
+		SimpleSolid s = o.getSolid();
+		if(s!=null){
+			if(m.map[x][y] == null)
+			{
+				m.map[x][y] = s;
+			} else {
+				return false;
+			}
+			 
+		}
+		addList.add(o);
+		o.w = m;
+		o.coor_x = x;
+		o.dx = 0;
+		o.pre_x = x * m.cellWidth;
+		o.coor_y = y;
+		o.dy = 0;
+		o.pre_y = y * m.cellHeight;
+		return true;
 	}
-
-	public SimpleObject[][][] getMap() {
-		return map;
-	}
-
-	public boolean load(SimpleObject[][][] map) {
-		if (map.length == this.map.length
-				&& map[0].length == this.map[0].length
-				&& map[0][0].length == 2) {
-			this.map = map;
+	
+	public boolean removeSimpleObject(SimpleObject o){
+		int i = objects.indexOf(o);
+		if (i!=-1){
+			removeList.add(o);
+			SimpleSolid s = o.getSolid();
+			if(s!=null)
+			{
+				m.map[o.coor_x][o.coor_y] = null;
+			}
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-	private boolean move(int x1, int y1, int x2, int y2) {
-		if (map[x2][y2][0] != null) {
-			return false;
-		} else {
-			map[x2][y2][0] = map[x1][y1][0];
-			map[x1][y1][0] = null;
-			return true;
+	
+	public boolean removeSimpleObject(int x, int y){
+		boolean removed = false;
+		for(SimpleObject o : objects){
+			if(o.getX()==x&&o.getY()==y){
+				removeList.add(o);
+				SimpleSolid s = o.getSolid();
+				if(s!=null)
+				{
+					m.map[o.coor_x][o.coor_y] = null;
+				}
+				removed = true;
+			}
 		}
+		return removed;
 	}
-
+	
+	public void clearAll(int width, int height){
+		clearAll(width, height, m.cellWidth, m.cellHeight);
+	}
+	
+	public void clearAll(int width, int height, int cellWidth, int cellHeight){
+		objects.clear();
+		m = new SimpleSolidMap(width, height, cellWidth, cellHeight);
+	}
+	
+	public void setSimpleWorldObject(SimpleWorldObject swo){
+		this.swo = swo;
+	}
+	
+	public SimpleWorldObject getSimpleWorldObject(){
+		return swo;
+	}
+	
+	public void setBGImage(String sprite)	{
+		File f = new File(sprite);
+		this.background = ImgUpload.getInstance(f.getParentFile()).getImg(f.getName());
+	}
+	
+	public void setBGImage(int rgba, int width, int height) {
+		this.background = new ColorImg(rgba, width, height);
+	}
+	
+	public void setBGImage(Img i){
+		this.background = i;
+	}
+	
+	public void reSortZ(){
+		Collections.sort(objects,c);
+	}
+	
+	public Projector getProjector(){
+		return ip;
+	}
+	
 	@Override
 	public void iUpdate(BufferedImage ISlide) {
 
@@ -137,78 +188,25 @@ public class SimpleWorld extends JFrame implements Pinterface {
 				}
 			}
 		}
-		int[] m;
-		for (int x = 0; x < map.length; x++) {
-			for (int y = 0; y < map[x].length; y++) {
-				if (map[x][y][1] != null) {
-					map[x][y][1].update();
-					map[x][y][1].paintImage(g, x*cellWidth, y*cellWidth);
-					if(map[x][y][0]!=null)
-					{
-						map[x][y][0].collision(map[x][y][1]);
-						map[x][y][1].collision(map[x][y][0]);
-					}
-				}
-				if (map[x][y][0] != null) {
-					m = map[x][y][0].getMovement();
-					map[x][y][0].update();
-
-					if (m[SimpleObject.REL] == 1) {
-						m[SimpleObject.X] += x;
-						m[SimpleObject.Y] += y;
-						m[SimpleObject.REL] = 0;
-					}
-
-					if (m[SimpleObject.X] < 0) {
-						m[SimpleObject.X] = 0;
-					} else if (m[SimpleObject.X] >= map.length) {
-						m[SimpleObject.X] = map.length - 1;
-					}
-
-					if (m[SimpleObject.Y] < 0) {
-						m[SimpleObject.Y] = 0;
-					} else if (m[SimpleObject.Y] >= map[0].length) {
-						m[SimpleObject.Y] = map[0].length - 1;
-					}
-
-					if (m[SimpleObject.X] != x || m[SimpleObject.Y] != y) {
-						if (!move(x, y, m[SimpleObject.X], m[SimpleObject.Y])) {
-							map[x][y][0].collision(getObject(m[SimpleObject.X],
-									m[SimpleObject.Y], 0));
-							map[m[SimpleObject.X]][m[SimpleObject.Y]][0]
-									.collision(map[x][y][0]);
-							m[SimpleObject.X] = x;
-							m[SimpleObject.Y] = y;
-							m[SimpleObject.TIME] = 0;
-						}
-					}
-				}
-			}
+		
+		for(SimpleObject s: objects){
+			s.move();
 		}
-
-		for (int x = 0; x < map.length; x++) {
-			for (int y = 0; y < map[x].length; y++) {
-				if (map[x][y][0] != null) {
-					m = map[x][y][0].getMovement();
-					if (m[SimpleObject.TIME] > 1) {
-						m[SimpleObject.TIME] -= 1;
-						int off_x = ((m[SimpleObject.PREX] - m[SimpleObject.X])
-								* cellWidth * m[SimpleObject.TIME])
-								/ m[SimpleObject.DUR];
-						int off_y = ((m[SimpleObject.PREY] - m[SimpleObject.Y])
-								* cellHeight * m[SimpleObject.TIME])
-								/ m[SimpleObject.DUR];
-						map[x][y][0].paintImage(g, x * cellWidth + off_x, y
-								* cellHeight + off_y);
-					} else {
-						m[SimpleObject.TIME] = 0;
-						m[SimpleObject.PREX] = x;
-						m[SimpleObject.PREY] = y;
-						map[x][y][0].paintImage(g, x * cellWidth, y * cellHeight);
-					}
-				}
-			}
+		
+		for(SimpleObject s: objects){
+			s.paintImage(g);
 		}
+		
+		for(SimpleObject s: addList){
+			objects.add(s);
+		}
+		addList.clear();
+		
+		for(SimpleObject s: removeList){
+			objects.remove(s);
+		}
+		removeList.clear();
+		
 		swo.updateScreen(ISlide, g);
 		g.dispose();
 	}

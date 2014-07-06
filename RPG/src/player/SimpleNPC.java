@@ -1,13 +1,14 @@
 package player;
 
 import world.SimpleObject;
+import world.SimpleSolid;
 
-public class SimpleNPC extends SimpleObject{
+public class SimpleNPC extends SimpleSolid{
 	private boolean right = false;
 
 	public SimpleNPC() {
-		//A red 20x20 square.
-		this.setImage(0xFFFF0000, 20, 20);
+		//A red 16x16 square.
+		this.setImage(0xFFFF0000, 16, 16);
 	}
 
 	@Override

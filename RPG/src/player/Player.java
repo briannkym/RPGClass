@@ -8,18 +8,20 @@ import sprite.Img;
 import sprite.ImgUpload;
 
 import world.SimpleObject;
+import world.SimpleSolid;
 
-public class Player extends SimpleObject implements KeyListener {
-	private Img RobN = ImgUpload.getInstance(new File("../sprites")).getImg("NRobWalk.png"); 
-	private Img RobS = ImgUpload.getInstance(new File("../sprites")).getImg("SRobWalk.png"); 
-	private Img RobE = ImgUpload.getInstance(new File("../sprites")).getImg("ERobWalk.png"); 
+public class Player extends SimpleSolid implements KeyListener {
+	private Img gN = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlN.png"); 
+	private Img gS = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlS.png"); 
+	private Img gE = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlE.png"); 
+	private Img gW = ImgUpload.getInstance(new File("../sprites/char1")).getImg("girlW.png"); 
 	private int speed = 10;
 	private int x_dir = 0;
 	private int y_dir = 0;
 	private boolean move = false;
 
 	public Player() {
-		super("../sprites/SRobWalk.png");
+		this.setImage(gS);
 	}
 
 	@Override
@@ -29,6 +31,7 @@ public class Player extends SimpleObject implements KeyListener {
 
 	@Override
 	public void collision(SimpleObject s) {
+		
 	}
 
 	@Override
@@ -50,26 +53,22 @@ public class Player extends SimpleObject implements KeyListener {
 			System.exit(0);
 			break;
 		case KeyEvent.VK_LEFT:
-			this.setDrawMode(SimpleObject.FLIP_X, 0);
-			this.setImage(RobE);
+			this.setImage(gW);
 			x_dir = -1;
 			move = true;
 			break;
 		case KeyEvent.VK_RIGHT:
-			this.setDrawMode(SimpleObject.NONE, 0);
-			this.setImage(RobE);
+			this.setImage(gE);
 			x_dir = 1;
 			move = true;
 			break;
 		case KeyEvent.VK_UP:
-			this.setDrawMode(SimpleObject.NONE, 0);
-			this.setImage(RobN);
+			this.setImage(gN);
 			y_dir = -1;
 			move = true;
 			break;
 		case KeyEvent.VK_DOWN:
-			this.setDrawMode(SimpleObject.NONE, 0);
-			this.setImage(RobS);
+			this.setImage(gS);
 			y_dir = 1;
 			move = true;
 			break;

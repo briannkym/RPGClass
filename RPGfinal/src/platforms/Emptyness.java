@@ -1,14 +1,18 @@
 package platforms;
 
+import java.util.Random;
+
 import world.SimpleObject;
 
-public class HighFloor extends SimpleObject{
+public class Emptyness extends SimpleObject{
 
-	public static final char ID = 10;
+	public static final char ID = 11;
+	private static Random r= new Random();
 	
-	public HighFloor() {
+	public Emptyness() {
 		super(SimpleObject.NO_MOVES);
-		this.setImage("../sprites/isocolors/greenT.png");
+		this.setImage("../sprites/things/star"+r.nextInt(4)+".png");
+		this.setOffset(0, 8);
 	}
 	
 	@Override
