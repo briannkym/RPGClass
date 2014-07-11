@@ -37,7 +37,7 @@ public class Player extends SimpleSolid implements KeyListener {
 	@Override
 	public void update() {
 		if (move) {
-			this.moveCell(x_dir, y_dir, speed, true);
+			this.moveCell(x_dir, y_dir, true);
 		} else {
 			this.getImage().setSlide(0);
 		}

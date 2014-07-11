@@ -63,6 +63,9 @@ public class Player extends SimpleSolid implements KeyListener {
 			offset[1]= -2;
 			break;
 		case HighFloor.ID:
+		case Box.ID:
+		case Lock.ID:
+			case Bricks.ID:
 			switch(offset[1]){
 			case 0:
 				this.cancelMove();

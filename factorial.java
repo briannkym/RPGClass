@@ -2,13 +2,11 @@ class factorial
 {
 	public static void main(String[] args)
 	{
-		int i = 0;
-		if (args.length > 0)
-		{
-			i = Integer.parseInt(args[0]);
+		int i = 20;
+		for(int x = 0; x<i; x++ ){
+			System.out.println(factorial(x) + ",");
 		}
 		
-		System.out.println(i + "! = " + factorial(i));
 
 	}
 

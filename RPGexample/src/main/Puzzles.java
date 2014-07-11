@@ -1,12 +1,12 @@
 package main;
 
-import platforms.*;
 import player.*;
 import world.*;
 
 public class Puzzles {
 	SimpleWorld w;
 	Player p;
+	GUI g;
 	
 	public static void main(String[] args){
 		Puzzles h = new Puzzles();
@@ -20,8 +20,10 @@ public class Puzzles {
 		wio.readWorld(w);
 		w.setBGImage(0xFF000000, 16, 16);
 		p = new Player();
+		g = new GUI();
 		w.addKeyListener(p);
 		w.addSimpleObject(p, 5, 5);
+		w.setSimpleWorldObject(g);
 		w.start(false);
 	}
 }

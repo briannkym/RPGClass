@@ -18,6 +18,6 @@ public class RPG {
 		w.addSimpleObject(p, 0, 0);
 		w.addSimpleObject(new SimpleNPC(), 10, 10);
 		w.addKeyListener(p);
-		w.start(true);
+		w.start(false);
 	}
 }
