@@ -1,0 +1,279 @@
+
+\section{Abstract and Interface}
+\subsection{Abstract Classes and Extends}
+
+\begin{frame}{Extends}
+\begin{itemize}
+\item When declaring a class, we can say it \emph{extends} another class. \pause
+\item If a class $A$ extends another class $B$, we say that class $A$ is a subclass of $B$.  \pause
+\item Another way to say this is that $A$ is $B$'s child, and $B$ is $A$'s parent.  \pause
+\item We can also say that $A$ is derived from $B$, inheriting $B$'s methods.  \pause
+\item A subclass can use any of the methods of its parent class.  \pause
+\item A class can only extend one other class. However, a class can extend a class that extends another class that... etc.
+\item To access the methods of a parent class, use the keyword \texttt{\code{super}}.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Overriding}
+\begin{itemize}
+\item If a subclass declares a method with the same modifiers, name, and arguments as a parent, we say that the subclass \emph{overrides} the method. \pause
+\item \code{\texttt{@Override}} declares that a method overrides a parent's method. If the method does not override a parent method this will create an error.  \pause
+\item Take for example the person class with a method work. We then might have two subclasses, a teacher and a student, that extend person. \pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Overriding}
+\begin{itemize}
+
+\item Both the student and the teacher are persons. Thus they can do anything other persons can do.  \pause
+\item When a teacher works, she or he creates homework. When a student does work, she or he finishes homework.  \pause
+\item All classes \emph{descend} from the \code{Object} class. This means all objects have inherited the methods from the \code{Object} class. Furthermore, in a way \code{null} descends from all classes, though it does not contain any methods.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Different Persons}
+\begin{semiverbatim}\code{\small
+public class Person\{
+    public void work()\{\}
+\}
+
+public class Teacher extends Person\{
+    public void work()\{
+    //Create Homework Here
+    \}
+\}
+
+public class Student  extends Person\{
+    public void work()\{
+    //Finish Homework Here
+    \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Why Bother?}
+\begin{center}
+\includegraphics[width = 4.5cm]{winnie}
+
+\emph{Using classes, subclasses, and hierarchies of objects simplifies our code by making it 1. shorter and 2. organizing it by type.}\end{center}
+\end{frame}
+
+\begin{frame}{Abstract Classes}
+\begin{itemize}
+\item Abstract classes require an object to extend them in order to be used. \pause
+\item Abstract classes can have both normal methods (the ones we are used to), as well as abstract methods. Abstract methods \emph{have to} be overriden by the subclass.
+\item Since the methods must be seen by subclasses in order to be overriden, they cannot be private. \pause
+\item To declare an abstract method, you use the \code{abstract} keyword followed by the method declaration followed by a semicolon:
+
+\begin{center}
+\code{\texttt{abstract public void collision(SimpleObject s);}}
+\end{center}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Sneak Peak \#4}
+\begin{semiverbatim}\code{
+public abstract class SimpleObject \{
+   protected final int[] off = { 0, 0 };
+   abstract public void collision(SimpleObject s);
+   abstract public void update();
+   abstract public char id();
+   public String getInfo()\{
+      return "";
+   \}
+   public SimpleObject getCopy(String s)\{
+      return null;
+   \}
+}\end{semiverbatim}
+
+...
+\end{frame}
+
+
+\subsection{Interfaces and Implements}
+\begin{frame}{Interfaces}
+\begin{itemize}
+\item Like an abstract class, an \emph{interface} must be \emph{implemented} by a subclass. \pause
+\item Unlike an abstract class, interfaces \emph{only} contains empty methods that must be overriden, and they only contain static final variables. \pause
+\item The keyword \emph{final} makes a variable constant. Final variables cannot change \pause
+\item However, interfaces are useful since you can \emph{implement} more than one.
+\item When we access objects through shared methods of a parent class or an interface, we call that (inclusion) \emph{polymorphism}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{The KeyListener Class}
+\begin{semiverbatim}\code{
+public interface KeyListener extends EventListener \{
+
+    public void keyTyped(KeyEvent e);
+
+    public void keyPressed(KeyEvent e);
+
+    public void keyReleased(KeyEvent e);
+\}
+}\end{semiverbatim}
+\begin{center}
+Interfaces can extend (not implement) other interfaces. Interfaces cannot extend classes.
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Find the Abstract Class Errors!}
+\begin{semiverbatim}\code{\small
+public abstract class animal \{
+    abstract int population = 0;
+
+    private abstract void eat(food f);
+    public abstract static void sleep();
+    protected int getPopulation();
+    public abstract void makeNoise(int noise);
+
+    private void sayHello()\{
+       System.out.println("I am an animal!");
+    \}
+    public abstract void move()\{
+       //Move code here...
+    \}
+\}
+}\end{semiverbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Find the Interface Errors!}
+\begin{semiverbatim}\code{
+public interface updateListener implements updater \{
+
+    public final FASTUPDATE = 5;
+    String s;
+
+    public abstract void updateEvent1(int updateID);
+    private void autoUpdate();
+    public voidupdateEvent2(int updateID);
+\}
+}\end{semiverbatim}\pause
+
+\begin{center}If we fixed all the errors in the above code, what methods would a class that implements updateListener have to override?\end{center}
+\end{frame}
+
+\section{Bitwise Operations}
+\subsection{Bitwise Operations}
+\begin{frame}{Introduction}
+\begin{itemize}
+\item So far we know the following operators for integers: \code{\texttt{+}}, \code{\texttt{-}}, \code{\texttt{\textsuperscript{*}}}, \code{\texttt{/}}, \code{\texttt{\%}}, and \code{\texttt{=}}.
+\item In addition to these there are bitwise operators: \code{\texttt{\^}}, \code{\texttt{\&}}, \code{\texttt{|}}, \code{\texttt{\textasciitilde}}, \code{\texttt{>>}}, \code{\texttt{>>>}}, and \code{\texttt{<<}}.
+\item Finally there is one \emph{ternary} operator \code{\texttt{?:}}. It is shorthand for an if else statement.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{XOR and AND}
+\begin{itemize}
+\item Exclusive OR or XOR(\code{\texttt{\^}}) outputs a `1' if one bit is a `1' and the other is a `0':
+
+\begin{semiverbatim}\code{
+11001101
+10010100
+01011001}\end{semiverbatim}
+\pause
+\item AND(\code{\texttt{\&}}) outputs a `1' if both bits are a `1':
+
+\begin{semiverbatim}\code{
+01100110
+10101010
+00100010}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{OR and NOT}
+\begin{itemize}
+\item OR(\code{\texttt{|}}) outputs a `1' if at least one bit is a `1':
+
+\begin{semiverbatim}\code{
+10001101
+10100100
+10101101}\end{semiverbatim}
+\pause
+\item NOT(\code{\texttt{\textasciitilde}}) ``flips" the bits:
+
+\begin{semiverbatim}\code{
+10011010
+01100101}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Bit Shift}
+\begin{itemize}
+\item Shift-left(\code{\texttt{<<}}) moves all bits to the left padding with a `0': (shifting by 1)
+
+\begin{semiverbatim}\code{
+10011011
+00110110}\end{semiverbatim}
+\pause
+
+\item Logical Shift-right(\code{\texttt{>>}}) and Arithmetic Shift-right(\code{\texttt{>>>}}) moves all bits to the right. Logical shift right pads with a `0' while arithmetic shift copies the leading bit: (shifting by 1)
+
+\begin{semiverbatim}\code{
+01001101
+00101010}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Playing with Bitwise Operators}
+\begin{semiverbatim}\code{\scriptsize
+public class Bits \{
+
+    public static int a = 5;
+    public static int b = 27;
+    public static int c = 17;
+    public static int d = 14;
+
+    public static void calculate()\{
+        int e = b \& c;
+        int f = b | c;
+        int g = b >> 1;
+        int h = d \& (\textasciitilde c);
+        int i = a \^ b;
+        int j = b << 3;
+        int k = b \& ((c | d) >> 2);
+        int l = (({\textasciitilde}a) \& c) \^ (({\textasciitilde}b) \& d);
+        int m = (a << (a - 1)) \^ b;
+    \}
+\}
+}\end{semiverbatim}
+
+\only<1>{What is \code{a} in binary?}
+\only<2>{What is \code{b} in binary?}
+\only<3>{What is \code{c} in binary?}
+\only<4>{What is \code{d} in binary?}
+\only<5>{What is \code{e} in binary?}
+\only<6>{What is \code{f} in binary?}
+\only<7>{What is \code{g} in binary?}
+\only<8>{What is \code{h} in binary?}
+\only<9>{What is \code{i} in binary?}
+\only<10>{What is \code{j} in binary?}
+\only<11>{What is \code{k} in binary?}
+\only<12>{What is \code{l} in binary?}
+\only<13>{What is \code{m} in binary?}
+\end{frame}
+
+
+\begin{frame}{Last Chance for Points}
+Define the following keywords:
+
+\begin{center}
+\code{public\\ \pause
+final\\ \pause
+static\\ \pause
+private\\ \pause
+protected\\ \pause
+void\\ \pause
+abstract\\ \pause
+class\\ \pause
+interface\\ \pause
+implements\\ \pause
+extends
+}\end{center}
+\end{frame}

@@ -1,0 +1,268 @@
+
+\section{Public, Protected, and Private}
+\subsection{Scope}
+
+\begin{frame}{Public vs Non-Public Classes}
+\begin{itemize}
+\item \code{Public:} Visible to all classes in all packages. The name of the class must be the same as the name of the file.
+\item \code{No Modifier:} Visible only to classes in the same package. The name of the class does not have to be the same as the name of the file.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Public, Protected, and Private Variables and Methods}
+\begin{itemize}
+\item \code{Public:} The variable \emph{or method} can be seen by all classes in all packages.
+\item \code{Private:} The variable \emph{or method} can only be seen by the class.
+\item \code{Protected:} The variable \emph{or method} can be seen by all classes in the same package, and all \emph{subclasses} (we will see this tomorrow).
+\item \code{No Modifier:} The variable \emph{or method} can be seen by all classes in the same package, but not \emph{subclasses} (we will see this tomorrow).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Easy Table for Memory}
+\begin{center}
+\begin{tabular}{|r|c|c|c|c|} \hline
+\rotatebox[origin=c]{-45}{Modifier} & \rotatebox[origin=c]{-90}{Class} & \rotatebox[origin=c]{-90}{Package} & \rotatebox[origin=c]{-90}{Subclass} & \rotatebox[origin=c]{-90}{Other Packages}\\ \hline
+public &Y &	Y &	Y &	Y\\ \hline
+protected &	Y &	Y &	Y &	N\\ \hline
+no modifier &Y &Y &	N & N\\ \hline
+private & Y & N & N & N \\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Scoping it Out!}
+\begin{columns}[onlytextwidth]
+    \begin{column}{0.5\textwidth}
+\begin{semiverbatim}\code{ \scriptsize
+package package1;
+
+public class class1 \{
+   int a;
+   public double b;
+
+   private void mult(int k, int l)\{
+      a = k*l;
+   \}
+\}
+
+
+class class2 \{
+   protected String c;
+   private double d;
+   public static short e;
+
+   protected void setC(String m)\{
+      this.c = m;
+   \}
+\}
+}\end{semiverbatim}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+\begin{semiverbatim}\code{ \scriptsize
+package package2;
+
+public class class3 \{
+   private boolean f;
+   protected byte g;
+   private static long h;
+
+   protected void sayHi()\{
+      System.out.println("Hello World!");
+   \}
+\}
+
+class class4 \{
+   public class3 i;
+   static char j;
+\}
+}\end{semiverbatim}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\section{Graphics}
+\subsection{Getting into the Swing of Things}
+\begin{frame}{What is a GUI?}
+\begin{itemize}
+\item A GUI is a \emph{Graphical User Interface}.\pause
+\item Most applications you use on your computer, phone, or gaming device have a GUI.
+\item Are GUI's necessary? Can we play a 3D RTS with a GUI? \pause
+\item \emph{Yes}. We don't necessarily need to see graphics to play a game. We could also use ASCII characters to approximate an image. (But that's no fun.)\pause
+\item In Java, most visible GUI objects are contained in the \emph{Swing} package. Ways to interact with the GUI are kept in the \emph{awt} package.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The Swing Package and Some Classes}
+\begin{itemize}
+\item \code{javax.swing.JFrame}: This gives us the frame for a window.\pause
+\item \code{javax.swing.JPanel}: This gives us the body of our window.\pause
+\item \code{javax.swing.JTextArea}: This gives us a 2D text field (square of text space).\pause
+\item \code{javax.swing.JTextField}: This gives us a 1D text field (line of text space).
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example \#1: Lets Make a Terminal!}
+\begin{center}Create a new class. Put the following in it.\end{center}
+\begin{semiverbatim}\code{\small
+private static JFrame jf = new JFrame("name");
+private static JPanel jp = new JPanel(
+    new BorderLayout());
+private static JTextField textField= new JTextField(40);
+private static JTextArea textArea= new JTextArea(10,40);
+}\end{semiverbatim}\pause
+\begin{center}Create a main method in your class.\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Example \#1}
+\begin{center}
+Put the following in your main method. Then run your code to check if it works.
+\end{center}
+\begin{semiverbatim}\code{
+jf.setDefaultCloseOperation(JFrame.EXIT\_ON\_CLOSE);
+textArea.setEditable(false);
+jp.add(textField, BorderLayout.NORTH);
+jp.add(textArea, BorderLayout.SOUTH);
+jf.add(jp);
+jf.pack();
+jf.setVisible(true);
+
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Example \#1: Explanation}
+\begin{itemize}
+\item \code{\texttt{new JFrame(<text>)}}: Creates a new window frame with the \texttt{text} on top.\pause
+\item \code{\texttt{setDefaultCloseOperation( JFrame.EXIT\_ON\_CLOSE)}}: Causes the program to terminate when the window is closed.\pause
+\item \code{\texttt{new JTextField(<int>)}}: Creates a text field that can hold \texttt{<int>} characters.\pause
+\item \code{\texttt{new JTextArea(<rows>,<collums>)}}: Creates a new text area. Each cell in the area can hold one character.\pause
+\item \code{\texttt{setEditable(false)}}: Prevents the text area from being edited.\pause
+\item \code{\texttt{new JPanel(new BorderLayout())}}: Creates a layout. A \emph{layout} is a way to organize objects in a panel.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Example \#1: Explanation}
+\begin{itemize}
+\item \code{\texttt{jp.add(textField, BorderLayout.NORTH)}}: Adds a text field towards the top of our panel.\pause
+\item \code{\texttt{jp.add(textArea, BorderLayout.SOUTH)}}: Adds a text area towards the bottom of our panel.\pause
+\item \code{\texttt{jf.add(<JPanel>)}}: Adds a panel to our frame.\pause
+\item \code{\texttt{jf.pack()}}: Sets the size of the frame so that it is just big enough to hold our panel.\pause
+\item \code{\texttt{jf.setVisible(<boolean>)}}: Makes the frame visible (otherwise the user can't see it).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The Swing Package and Some Classes}
+\begin{itemize}
+\item \code{java.awt.BorderLayout}: This is the layout that we used in the previous example.\pause
+\item \code{java.awt.event.KeyAdapter}: This is a class that must be \emph{extended}. It contains methods for key events.\pause
+\item \code{java.awt.event.KeyEvent}: This is an event for when someone uses the key board.\pause
+\item \code{java.awt.event.WindowAdapter}: This is also a class that must be \emph{extended}. It contains methods for window events.\pause
+\item \code{java.awt.event.WindowEvent}: This is an event for when someone closes, minimizes, or otherwise changes a window.\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example \#2: Lets Interface with Our Terminal!}
+\begin{center}Create a new classfor your KeyAdapter:\end{center}
+\begin{semiverbatim}\code{\small
+class ka extends KeyAdapter\{
+
+   private JTextField textField;
+   private JTextArea textArea;
+
+   public ka(JTextField textField, JTextArea textArea)\{
+      this.textField = textField;
+      this.textArea = textArea;
+   \}
+\}
+}\end{semiverbatim}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Example \#2}
+\begin{center}Create the following method in your KeyAdapter:\end{center}
+\begin{semiverbatim}\code{
+@Override
+public void keyPressed(KeyEvent e) {
+   switch(e.getKeyCode()){
+   case KeyEvent.VK\_ENTER:
+      if(!textField.getText().equals("")){
+         String s = textArea.getText();
+         textArea.setText(s + "{\textbackslash}n" 
+              + textField.getText());
+         textField.setText("");
+      }
+   break;
+   }
+}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Example \#2: Explanation}
+\begin{itemize}
+\item Add \code{\texttt{textField.addKeyListener(new ka(textField, textArea));}} in your main method to make the text field send Key Events. \pause
+\item \code{\texttt{@Override}}: This is optional. It tells the compiler and the person reading the code that this method replaces the method of the same name in KeyAdapter. \pause
+\item \code{\texttt{keyPressed(KeyEvent e)}}: This method is called whenever a person presses down on a key. \pause
+\item \code{\texttt{e.getKeyCode()}}: This method gets the code for the key pressed from the KeyEvent. \pause
+\item \code{\texttt{KeyEvent.VK\_ENTER}}: This is the event for a key being pressed.
+\end{itemize}
+\end{frame}
+
+\subsection{The world Package}
+
+\begin{frame}{The world Package}
+\begin{center}The most important classes:\end{center}
+\begin{itemize}
+\item SimpleSolid: These are objects that can move, receive and give collisions (which calls the collision method). SimpleSolid must be \emph{extended}.\pause
+\item SimpleObject: These are objects that can move and receive collisions (they cannot collide with other SimpleObjects). SimpleObject must be \emph{extended}.\pause
+\item SimpleWorld: This manages all of the movements of objects, and drawing the images.\pause
+\item SimpleWorldObject: This object can draw over the screen (things like pause, dialog, etc.).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What Must Be Overridden}
+\begin{center}
+The following must be overridden in an object that \emph{extends} SimpleSolid
+\end{center}
+\begin{itemize}
+\item \code{\texttt{abstract public void collision(SimpleObject s)}}: This method is called automatically when a collision happens. The argument ``s" is the object the solid had a collision with.
+\item \code{\texttt{abstract public void update()}}: This method is called 20 times per second! Use this to update the game's state.
+\item \code{\texttt{abstract public char id()}}: This method is used for other objects to find out the id of an object it is colliding with.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solid Useful Methods}
+\begin{itemize}
+\item \code{\texttt{SimpleSolid player = new SimpleSolid("girlS.png")}}: instantiates a solid with an image (preferably a png. Jpeg won't work.).\pause
+\item \code{\texttt{player.setImage("girlN.png")}}: changes the image of an object.\pause
+\item \code{\texttt{player.playSound("punch.wav")}}: plays a sound (a midi or a wav).\pause
+\item \code{\texttt{player.moveCell(x, y, true)}}: moves the player to the cell $(x, y)$ relative to its position.\pause
+\item \code{\texttt{player.moveCell(x, y, 8, false)}}: over 8 frames, moves the player to the cell $(x, y)$ in the world.\pause
+\item \code{\texttt{SimpleSolid personAbovePlayer = player.getNorthSolid()}}: gets the object above the player.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Worldly Useful Methods}
+\begin{itemize}{\small
+\item \code{\texttt{SimpleWorld world = new SimpleWorld(20, 20, 16, 16, "My first java game!")}}: Creates a map of 20x20 cells, each of which are 16x16 pixels wide. Gives the application the name ``My first java game!"\pause
+\item \code{\texttt{world.addSimpleObject(person, 5, 7)}}: adds an object at the position $(x = 5)$ and $(y = 7)$. Returns true if the object was successfully added.\pause
+\item \code{\texttt{world.removeSimpleObject(person)}}: removes the object \emph{person} if it's in the map. Returns true if the object was successfully removed.\pause
+\item \code{\texttt{world.setSimpleWorldObject(swo)}}: adds a simple world object.\pause
+\item \code{\texttt{world.setBGImage("floor.png")}}: sets the background image for the world.\pause
+\item \code{\texttt{world.start(false)}}: starts the game either in fullscreen (true) or a window (false).
+}\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Sneak Peak \#3}
+\begin{center}The following is in \code{\texttt{SimpleWorld.start(false)}}. SimpleWorld extends the \emph{JFrame} class.\end{center}
+\begin{semiverbatim}\code{
+this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+this.setTitle(title);
+this.setIgnoreRepaint(true);
+this.pack();
+this.setResizable(false);
+this.setVisible(true);
+}\end{semiverbatim}
+\end{frame}

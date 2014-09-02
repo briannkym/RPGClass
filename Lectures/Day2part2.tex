@@ -1,0 +1,214 @@
+
+\section{Making Methods!}
+
+\subsection{Modifiers}
+
+\begin{frame}[fragile]{WarmUp}
+\begin{semiverbatim}\code{\scriptsize
+import java.util.Scanner;
+
+public class quizGame\{
+   static String[] questions = \{"Pick a number (1-4)",
+   "Pick a color (1. Red, 2. Blue, 3. Green, 4. Purple)",
+   "Pick an animal (1. Panda, 2. Squirrel, 3. Whale, 4. Jigglypuff) "\};
+
+   public static void main(String[] args)\{
+      int i = 0;
+      Scanner input = new Scanner(System.in);
+      for(String s : questions)\{
+         System.out.println(s);
+         i = (i + input.nextInt())\%4;
+      \}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{WarmUp}
+\begin{semiverbatim}\code{\scriptsize
+switch (i)\{
+   case 0 :
+   System.out.println("You will have a super lucky day!");
+   break;
+   case 1 :
+   System.out.println("You will learn a lot today!");
+   break;
+   case 2 :System.out.println("You will have a bad day today.");
+   break;
+   case 3 :System.out.println("Today is a good day to make friends");
+   break;
+   default:
+   System.out.println("Error!");
+\}
+input.close();
+\}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{A simple method}
+\begin{itemize}
+\item Believe it or not, we know enough syntax to make any program conceivable (though we do not know other things like how to interface to the screen). \pause
+\item However, if we put everything in the main method, our code will be extremely long and unreadable!
+\item We need methods:
+\begin{center}\texttt{\code{public static <returnType> <methodName>(<OptionalArguments>)\{ ... \}}}\end{center}
+\item A \emph{static} method can take in \emph{arguments}, return a value, and change the state of other static variables. Lets try it:
+\begin{semiverbatim}\code{
+public static int RollXd20(int number)\{\scriptsize
+   return (int)(number\textsuperscript{*}20\textsuperscript{*}math.Random()) +1;
+\}
+}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Static vs. Non-Static}
+\begin{itemize}
+\item For the time being we are going to keep everything \emph{public}.
+\item However, we can start using \emph{non-static}, instance variables and methods. \pause
+\item So far we've used a few classes that require \emph{instantiation} (e.g. Scanner, arrays) \pause
+\item \emph{Static} methods and variables do not require instantiating a class.
+\item Non static methods do require instantiating an object, and each instance gets its own copy of all the non-static variables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Creating an Object}
+\begin{semiverbatim}\code{
+public class Person\{
+    static int population = 0;
+    int counter = 0;
+    int ssn;
+
+    public Person(int ssn)\{
+       this.ssn = ssn;
+       population++;
+       counter ++;
+    \}
+
+    public in getSSN()\{
+       return ssn;
+    \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Instantiating an Object}
+\begin{semiverbatim}\code{
+public class PersonTest\{
+    public static void main(String[] args)\{
+        Person p = new person();
+        p.getSSN();
+    \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Case study: Objects with a Static Variable}
+\begin{center}
+Create a static method in the Person class that returns the population variable. Next in the PersonTest class, create more than one person using a loop. How does the population change? Finally, do the same for the counter variable. Does it change?
+\end{center}
+\end{frame}
+
+\begin{frame}{Refactor your 2D RPG into methods}
+\begin{center}
+Your RPG from before lunch can be augmented with methods. For example, you can put all of the logic for the monster in a monster method. Try to put all of the logic for the monster in its own method, then recompile your program and make sure it works.\\
+\end{center}
+\end{frame}
+
+\subsection{Packages and Classes}
+\begin{frame}{Getting organized}
+\begin{center}
+As you get more classes, you may want to start sorting them into different packages. Creating a package is easy. In Eclipse click \code{File$\rightarrow$New$\rightarrow$Package}. Name your package and click \code{Finish}. Don't forget, it you're using code that's in a different package, you need to use \emph{import}.
+\end{center}
+\end{frame}
+
+\begin{frame}{Extra Challenge}
+\begin{center}
+Move your methods into different classes and or different packages. For example it might be nice to have a dice package that calculates random dice numbers for 4d20, d6, etc. After this, if your RPG is complete enough show it to me or a friend!
+\end{center}
+\end{frame}
+
+\section{Recursion}
+
+\subsection{What it is}
+\begin{frame}{A Weird Way to Loop}
+\begin{itemize}
+\item Loops let us repeat the same code more than once, but they have one limitation: complexity. \pause
+\item Sometimes code written using loops can be verbose and confusing, and for this reason programmers sometimes opt to use recursion.
+\item What is a recursive function? \pause
+\item Definition: $f(x) = g(f(x-1), f(x-2), ...)$. In other words if we have some output $f_{n+1}$ it depends on its previous output(s) $f_{n}$.\pause
+\item Example: $f_{n+1} = !f_{n+1}$, where for all $n, f_n$ is either \texttt{\code{true}} or \texttt{\code{false}}. \pause
+\item This gives us the sequence \texttt{\code{true, false, true, false, true}}...
+\item What does this look like in code?
+\end{itemize}
+\end{frame}
+
+\subsection{An Example}
+\begin{frame}[fragile]{Recursion}
+\begin{semiverbatim}\code{
+class factorial\{
+   public static void main(String[] args)\{
+      int i = 0;
+      if (args.length > 0)\{
+         i = Integer.parseInt(args[0]);
+      \}
+      System.out.println(i + "! = " + factorial(i));
+   \}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{semiverbatim}\code{
+   public static int factorial(int n)\{
+      if(n > 1)\{
+         return n * factorial(n-1);
+      \}
+      else if(n >= 0)\{
+         return 1;
+      \}
+      return -1;
+   \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Questions}
+\begin{center}
+What number sequence does this output?\\
+$f_0, f_1, f_2, f_3 ...?$\\ \pause
+Challenge: Which is faster, recursion or looping? Can you use \texttt{\code{System.nanoTime()}} to find out?
+\end{center}
+\end{frame}
+
+\section{Bonus Sneak Peak and HW}
+\subsection{The Game Engine}
+\begin{frame}{2D Array based Collision Algorithm}
+\begin{center}Download the resources file on my website into your \code{MyProjects} folder, and then extract its contents. Import the resources as a project into Eclipse. Click \code{File $\rightarrow$ Import $\rightarrow$ General $\rightarrow$ Existing Project from Workspace $\rightarrow$ Next $\rightarrow$ Browse}. Then select the \code{Resources} folder. Finally click \code{Select All $\rightarrow$ Finish}.\\
+
+The interesting method is \code{moveCell()} in \code{SimpleSolid.java}\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Some Big If Statements}
+\begin{semiverbatim}\code{
+if (temp_x >= 0 && temp_x < w.map.length 
+      && temp_y >= 0 && 
+      temp_y < w.map[0].length) \{
+   SimpleSolid s = w.map[temp_x][temp_y];
+   if (s != null) \{
+      s.collision(this);
+      collision(s);
+   \}
+}\end{semiverbatim}
+
+\end{frame}
+
+\subsection{Practice Recursion}
+\begin{frame}{Some Recursive Problems}
+\begin{itemize}
+\item $f_{n+1} = f_n + 1$ for $f_0 >= 0$
+\item $f_{n+1} = f_n + 2$ for $f_0 >= 1$
+\item $f_{n+1} = f_n ^* 2$ for $f_0 = 1$
+\item $f_{n+1} = f_n / f_{n - 1}$ for $f_1 = 2, f_0 = 1$ \pause
+\item SUPER BONUS: Try to come up with a recursive function that outputs a random number sequence.  \pause
+\item SUPER SUPER BONUSE: Create the fill-in algorithm using recursion.
+\end{itemize}
+\end{frame} 

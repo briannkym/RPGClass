@@ -1,0 +1,467 @@
+
+\section{Lets Make a Map}
+
+\subsection{Arrays}
+\begin{frame}[fragile]{Review \#1}
+\begin{semiverbatim}\code{
+int i = 30 \% 7; \pause \textbackslash\textbackslash 2
+int j = 30 / 5; \pause \textbackslash\textbackslash 6
+int k = i * i - j; \pause \textbackslash\textbackslash -2
+int h = 0;
+if(k <= 0)\{
+   h += 4;  \pause \textbackslash\textbackslash 4
+   if(k == 0)\{
+      h /= 1;
+   \} else if (!(k >= -1))\{
+      h /= 2;
+   \} else \{
+      h /= 4;
+   \} \pause \textbackslash\textbackslash 2
+}\end{semiverbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Review \#1}
+
+\begin{semiverbatim}\code{
+   if(k == 0)\{
+      h /= 1;
+   \} else if (!(k >= -1))\{
+      h /= 2;
+   \} else \{
+      h /= 4;
+   \} \textbackslash\textbackslash 2
+   System.out.print("Zombies eat bra");
+   if((false || k == -2)\&\& !(j\textsuperscript{*}h\textsuperscript{*}i > 20))\{
+      System.out.print("i");
+   \}
+   System.out.print("ns and oats.")\pause \textbackslash\textbackslash brans
+}\end{semiverbatim}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Review \#2}
+
+\begin{semiverbatim}\code{
+boolean b; int i = 1; int j = 0;
+String s = i + "2" + j + "1" + j; \pause \textbackslash\textbackslash "12020"
+double d = Double.parseDouble(s);
+double w = (d + i) / d;
+if (w <= 0)\{
+    b = true;
+    s+="hello!"
+\} else \{
+    b = false;
+    s+="goodbye!"
+\} \pause \textbackslash\textbackslash "goodbye!"
+}\end{semiverbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Review \#2}
+\begin{semiverbatim}\code{
+if (w <= 0)\{
+    b = true;
+    s+="hello!"
+\} else \{
+    b = false;
+    s+="goodbye!"
+\} \textbackslash\textbackslash "goodbye!"
+if(!(!s.equals("12010goodbye") || b ) \&\& !b)\{
+    System.out.println("Goodbye!")
+\} else if (!(!b))\{
+    System.out.println("Hello!")
+\} \pause \textbackslash\textbackslash no print.
+}\end{semiverbatim}
+
+\end{frame}
+
+
+\begin{frame}{Eclipse}
+When writing programs, errors are inevitable, and sometimes frustrating. Syntax errors can be especially frustrating, but luckily there is a tool that highlights such errors:
+\begin{itemize}
+\item Create a folder on your flash drive called \code{MyProjects}.
+\end{itemize}
+
+\begin{center}
+Open Eclipse...
+\end{center}
+\end{frame}
+
+\begin{frame}{From now on we will use Eclipse}
+\begin{itemize}
+\item Eclipse will ask you to select a workspace, select the \code{MyProjects} folder you just created. You must select this as your workspace everytime you use Eclipse.
+\item To start a java project click \code{File$\rightarrow$New$\rightarrow$Project}. Then select \code{Java Project} in the \code{Java} folder and then click \code{Next}.
+\item Give your project a name, then click \code{Finish} \pause
+
+\item To create a *.java file, click \code{File$\rightarrow$New$\rightarrow$Class}. Click \code{Finish}. Write a simple program that prints out a line. \pause
+\item There are two ways to run your code. Either click ``Run", \code{\emph{the green circle with an arrow in it}}, or \code{Right Click$\rightarrow$Run As$\rightarrow$Java Application}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Output}
+\begin{itemize}
+\item The output should appear in a terminal in eclipse at the bottom of the screen.
+\item By default, errors and problems with your code should also show up here. \pause
+\item Other Benefits:
+\begin{itemize}
+\item Syntax highlighting.
+\item Eclipse has code completion. Try typing ``\code{\texttt{System.}}" . You should see a list of options. Click on any one of these options to learn more about it. Press enter to insert an option. \pause
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+\begin{frame}{Some more Benefits}
+\begin{itemize}
+\item Error correction: Type in the following: ``\code{\texttt{System.out.pintln("Hello");}}. You should see a lightbulb on the left. Click it. The lightbulb offers suggestions as to how to fix your code. Click \code{Change to 'println(..)'}. \pause
+\item Auto tabbing: Remove or add white space to your codes (more tabs, less tabs, etc.). Hold \code{\texttt{Ctrl+Shift+F}}. Magic!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Back to String[] args}
+\begin{itemize}
+\item What is that \code{\texttt{[]}}?
+\item The \code{\texttt{[]}} \emph{declares} that args is an array.
+\item An array is a fixed list of variables that all have the same type. \pause
+\item For example, when running \code{\texttt{java ArgProgram hi there matey !}}\\
+\begin{semiverbatim}\code{
+    args[0] = "hi";
+    args[1] = "there";
+    args[2] = "matey";
+    args[3] = "!";
+}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Arrays}
+\begin{itemize}
+\item To declare an array you use:
+\begin{center}
+\code{\texttt{<type>[] <name>;}}
+\end{center}
+
+\item Arrays can have any type. For example:
+\begin{center}
+\code{\texttt{String[] names;}}
+\code{\texttt{double[] vector;}}
+\code{\texttt{int[] colors\_list;}}
+\code{\texttt{char[] commands;}}
+\code{\texttt{boolean[] mask;}}
+\end{center}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Instantiating Arrays: 2 Ways}
+\begin{itemize}
+\item Way \#1:
+\begin{center}
+\code{\texttt{String[] s = \emph{new} String [3];}}\\
+\code{\texttt{s[0] = "You see an alligator. What should you do? [Run] [Hide]";}}\\
+\code{\texttt{s[1] = "Awww, you were eaten. =(";}}\\
+\code{\texttt{s[2] = "You escaped!";}}
+\end{center}\pause
+
+\item Way \#2:
+\begin{center}
+\code{\texttt{int[] colors\_list = \{20, 40, 567433\};}}
+\end{center}
+\item Similar to Way \#1, Way \#2 creates a new array that can hold 3 elements.\pause
+\item Arrays are indexed by integers, thus the following is true:
+\begin{center}\code{\texttt{colors\_list[1] == 40}}
+\end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Some Common Errors}
+\code{\texttt{int array[x]}}
+\begin{itemize}
+\item \code{\texttt{x <= -1}} \pause
+\item \code{\texttt{x >= array.length}} \pause
+\item \code{\texttt{array = 5 \textbackslash\textbackslash This will cause an error}} \pause
+\item \code{\texttt{array[3] = 5 \textbackslash\textbackslash This is right}} \pause
+\item \code{\texttt{array[x].length \textbackslash\textbackslash This will cause an error}} \pause
+\item \code{\texttt{array.length \textbackslash\textbackslash This is right}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{2 Dimensional Arrays}
+\begin{itemize}
+\item Arrays can have more than one dimension. For example:
+\begin{center}\texttt{\code{char[][] map = new map[20][20]}}\end{center}
+\item This create a $20 \times 20$ array of characters.
+\item We can instantiate the array the same way as a 1D array. For example:
+\begin{center}\code{\texttt{map[x][y] = 'S';}}\\
+\code{\texttt{map = \{\{'a','b','c'\},\{'d','e','f'\},\{'g','h','i','j'\}\};}}\\ \end{center}
+\item To get the number of variables in an array use \code{\texttt{<arrayName>.length}}
+\begin{center}\code{\texttt{map.length == 3 \&\& map[2].length == 4}}\\ \end{center}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+\begin{semiverbatim}\code{
+public class BattleShip\{
+   public static void main(String[] args)\{
+   char[][] map = \{\{' ',' ',' ',' '\},
+                \{' ',' ','X',' '\},
+                \{' ',' ','X',' '\},
+                \{' ',' ','X',' '\}\};
+}\end{semiverbatim}
+\begin{center}Try printing out different squares in the array.\end{center}
+\end{frame}
+
+\subsection{For Loops}
+
+\begin{frame}[fragile]{Complete the Code}
+\begin{semiverbatim}\code{
+\underline{  1  } \underline{  2  } TaxCalculator\{
+    \underline{  3  } \underline{  4  } \underline{  5  }(\underline{  6  }[] \underline{  7  })\{
+        if (\underline{  8  }.length \underline{  9  } 1) \underline{  10  }
+            \underline{  11  } tax = 0.075;
+            double total = \underline{ 12 }.parseDouble(\underline{ 13 });
+            total \underline{   14   } 1.0 + tax;
+            \underline{   15   }.println("With a rate of " + tax
+          + ", the total price is " + total + ".");
+        \}
+    \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{MiniQuiz: Find all the Errors}
+\begin{semiverbatim}\code{
+Public class \_RollD20\{
+    Public statc void main(string[] args)
+        int roll = Math.random;
+        int d20 = Integer.parseInt(roll * 20)
+        system.out.PrintLn('Your roll was ' +
+           d + 20);
+    \}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Using a For Loop}
+\begin{itemize}
+\item Now that we know about arrays, we can now use for loops to access many variables at once.
+\item For loops look like this:
+\begin{center}\texttt{\code{for(int i = 0; i < 5; i++)}}\end{center} \pause
+\item We can abstract for loops as:
+\begin{center}\texttt{\code{for(<instantiation>; <boolean operation>; <arithmetic operation>)}}\end{center} \pause
+\item Both the \texttt{\code{<instantiation>}} and the \texttt{\code{<arithmetic operation>}} are optional.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{What does it do?}
+\begin{itemize}
+\item Works like an if statement. If the \texttt{\code{<boolean operation>}} is true then it runs the next line or block of code. \pause
+\item Unlike an if statement the for loop keeps running the loop from top to bottom until the \texttt{\code{<boolean operation>}} is false. \pause
+\item Before the loop begins \texttt{\code{<instantiation>}} is executed. \pause
+\item After each \emph{iteration} of the for loop, the \texttt{\code{<arithmetic operation>}} is executed;
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Printing a Map}
+\begin{center}Using the code from before, print out the array.\end{center}
+\begin{semiverbatim}\code{
+for(int y = 0; y < map.length; y++)\{
+  for(int x = 0; x < map[y].length; x++)\{
+     System.out.print(map[y][x]);
+   \}
+   System.out.println();
+\}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}{Other Ways to Use a For Loop}
+\begin{itemize}
+\item For loops are quite versatile:
+\item \texttt{\code{for(int i = 0; i \textless 5; i++)}} \pause
+\item \texttt{\code{for(String s = "a"; !s.equals("aaaaa"); s+="a")\{...\}}} \pause
+\item \texttt{\code{double d = 0.0; for(d = 1.0; d \textless 5.0; d\textsuperscript{*}=1.2);}} \pause
+\item \texttt{\code{boolean b = true for(; b; b=!b)\{...\}}} \pause
+\item \texttt{\code{for(int x : colors\_list)\{...\}}} \pause
+\item \texttt{\code{for( ; ; )\{...\} \textbackslash\textbackslash runs infinitely!!}}\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{BattleShip}
+\begin{center}
+Extend the Battleship code such that it works like the game Battleship. Have the computer randomly hide its ships using. Here's a hint:\\
+
+\texttt{\code{int y = (int)(Math.random() * map.length);}}\\
+
+Each turn the player should put in an input, which updates the map with either \texttt{\code{'H'}} for hit or \texttt{\code{'M'}} for miss. \\ \pause
+Optionally, extend the code so that you can place your own ships, Give the computer an AI for playing using \texttt{\code{Math.random()}}.
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Spot the Runtime Errors}
+\begin{semiverbatim}\code{
+int array = new array[-1];
+for(int y = -1; y <= array.length; y <= 1)\{
+    array[y] = array[y + 1];
+    array = null;
+\}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Spot the Logical Errors}
+\begin{itemize}
+\item We want the old array to hold the contents of the array.
+\item We want the new array to contain \{9, 7, 5, 3, 6\}
+\end{itemize}
+\begin{semiverbatim}\code{
+int oldarray = array;
+int[] array = \{5, 4, 3, 2, 1\};
+array = oldarray;
+for(int y = 0; y < array.length; y ++)\{
+    array[y] += array[(y + 1) \% 4];
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\section{While loops and Switch-Case}
+\subsection{}
+\begin{frame}[fragile]{While Loops}
+\begin{itemize}
+\item While loops work just like for loops, except they only use booleans:
+\begin{center}\texttt{\code{while(<boolean operation>)}}\end{center}
+\item Example:
+\begin{semiverbatim}\code{
+String s ="";
+while(!s.equals("Yes"))\{
+    System.out.println("Are you sure?")
+    s = input.nextLine();
+\}
+}\end{semiverbatim}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Do - While Loops}
+\begin{itemize}
+\item Do-while loops work the same way as while loops except \emph{they always execute the following block of code at least once.}
+\item Example:
+\begin{semiverbatim}\code{
+String s = input.nextLine();
+do \{
+    System.out.println("Are you sure?")
+    s = input.nextLine();
+\}while(!s.equals("Yes"));
+}\end{semiverbatim}
+\item Challenge: change your Battleship code to use only while or do-while loops.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Equivalence between For and While Loops}
+
+\begin{semiverbatim}\code{
+for(<instantiation>; <boolean operation>;
+     <arithmetic operation>)\{
+...
+\}
+}\end{semiverbatim}
+
+\begin{center}$\equiv$\end{center}
+\begin{semiverbatim}\code{
+<instantiation>;
+while(<boolean operation>)\{
+...
+<arithmetic operation>
+\}
+}\end{semiverbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Switch-Case}
+\begin{itemize}
+\item Often in programming we need to check several different cases. For example:
+\begin{semiverbatim}\code{
+int i = 5;
+if (i == 0)\{
+...
+\} else if (i == 1)\{
+...
+\} else if (i == 2)\{
+...
+\} else ....
+}\end{semiverbatim}
+\item This takes a long time. Instead, we can use Switch-Case statements.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Quick Experiment!}
+\begin{semiverbatim}\code{
+int i = \underline{   };
+switch(i)\{
+   case 0:
+   System.out.println("0!");   break;
+   case 1:
+   System.out.println("1!");   break;
+   case 2:
+   System.out.println("2!");
+   ...
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Quick Experiment!}
+\begin{semiverbatim}\code{
+   case 3:
+   System.out.println("3!");
+   case 4:
+   System.out.println("4!");   break;
+   default:
+   System.out.println("Other");
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Why use Switch-Case?}
+\begin{itemize}
+\item Switch case simplifies code, and gets rid of if-else chains. \pause
+\item It is much faster!
+\begin{center}
+Convert the experiment code to a chain of if-else statements. Use \texttt{\code{System.nanoTime()}} to measure how long the code takes. Example: \pause
+\end{center}
+\begin{semiverbatim}\code{
+long timeBefore = System.nanoTime();
+\textbackslash\textbackslash Your code here.
+long timeAfter = System.nanoTime();
+long totalTime = timeAfter - timeBefore;
+}\end{semiverbatim} \pause
+\item Why use if-statements? \pause \emph{You need if statements for any non ``discrete" values, like doubles or strings.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pop Quiz!}
+\begin{center}
+What is the difference between Declaration and Instantiation?\\  \pause
+
+Can an array be declared and have all of its variables instantiated in one line?\\  \pause
+
+What does \texttt{\code{System.nanoTime()}} do?\\  \pause
+
+How do you make an infinite for loop?\\  \pause
+
+Are while loops and for loops equivalent?\\  \pause
+
+Give an example of a scenario where we can't use switch-case statements.
+
+\end{center}
+\end{frame}
+
+\begin{frame}{Implement a 2D map based RPG}
+
+\begin{center}
+From now until Lunch, try to implement a 2D RPG with a Player, 'P', and a monster 'M'. The player should battle the monster if the player is on the same square.
+\end{center}
+\end{frame}

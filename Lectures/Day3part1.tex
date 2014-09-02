@@ -1,0 +1,472 @@
+
+\section{Objects and Methods}
+\subsection{Review}
+\begin{frame}[fragile]{Review: Spot the Runtime Errors}
+\begin{semiverbatim}\code{
+int array = new array[-1];
+for(int y = -1; y <= array.length; y <= 1)\{
+    array[y] = array[y + 1];
+    array = null;
+\}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Review: Spot the Logic Errors}
+\begin{itemize}
+\item We want the old array to hold the contents of the array.
+\item We want the new array to contain \{9, 7, 5, 3, 6\}
+\end{itemize}
+\begin{semiverbatim}\code{
+int oldarray = array;
+int[] array = \{5, 4, 3, 2, 1\};
+array = oldarray;
+for(int y = 0; y < array.length; y ++)\{
+    array[y] += array[(y + 1) \% 4];
+\}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Are the following equivalent? \#1}
+\begin{semiverbatim}\code{
+for(int y = 0; y < array.length; y ++)\{
+    array[y] += 1;
+\}
+\begin{center}?\end{center}
+int y = 0;
+do\{
+    array[y] +=1
+    y ++;
+\} while (y < array.length);
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{New Logins!}
+\begin{itemize}
+\item Last time Eclipse was running really, really slow.
+\item We now have new accounts that should fix this:
+
+\begin{center}
+Username: \code{!comsguest}\\
+Password: \code{wG4eQZag}
+\end{center}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{20 Minutes of Work Time.}
+\begin{center}
+I can help debug code from yesterday during this time.
+\end{center}
+\end{frame}
+
+
+\subsection{Getting into Methods}
+\begin{frame}[fragile]{What is a method?}
+\begin{itemize}
+\item A method is like a function. For example:
+\begin{center}
+f(x) = x + 7
+\end{center}
+\item When $x = 2$, $f(x) = \pause 9$. In java this would look like:
+\end{itemize}
+\begin{semiverbatim}\code{
+\addcorners{1}{public} \addcorners{2}{static} \addcorners{3}{int} \addcorners{4}{f}(\addcorners{5}{int x})\{
+    \addcorners{6}{return x + 7;}
+\}
+}\end{semiverbatim}
+
+\only<3>{\begin{tikzpicture}[overlay, remember picture]
+            % Define the circle paths
+            \draw [white,ultra thick,rounded corners](1.north west) -- (1.north east) --
+            (1.south east) -- (1.south west) -- cycle;
+
+            \end{tikzpicture}}
+
+\only<4>{\begin{tikzpicture}[overlay, remember picture]
+\draw [red,ultra thick,rounded corners](2.north west) -- (2.north east) --
+            (2.south east) -- (2.south west) -- cycle;
+\end{tikzpicture}}
+
+
+\only<5>{\begin{tikzpicture}[overlay, remember picture]
+\draw [red,ultra thick,rounded corners](3.north west) -- (3.north east) --
+            (3.south east) -- (3.south west) -- cycle;
+\end{tikzpicture}}
+
+
+\only<6>{\begin{tikzpicture}[overlay, remember picture]
+\draw [red,ultra thick,rounded corners](4.north west) -- (4.north east) --
+            (4.south east) -- (4.south west) -- cycle;
+\end{tikzpicture}}
+
+
+\only<7>{\begin{tikzpicture}[overlay, remember picture]
+\draw [red,ultra thick,rounded corners](5.north west) -- (5.north east) --
+            (5.south east) -- (5.south west) -- cycle;
+\end{tikzpicture}}
+
+\only<8>{\begin{tikzpicture}[overlay, remember picture]
+\draw [red,ultra thick,rounded corners](6.north west) -- (6.north east) --
+            (6.south east) -- (6.south west) -- cycle;
+\end{tikzpicture}}
+
+
+\only<3>{Modifier: \emph{public} means that this method can be seen by all classes that can see the class the method is in.}
+\only<4>{Modifier: \emph{static} means that this method does not require instantiation (it is not part of an object). All static methods can only access other static methods or variables.}
+\only<5>{\emph{int} is the type of value the method returns. If a method does not return anything, this is \emph{void}}
+\only<6>{\emph{f} is the name of the method. Like variables, you can name methods whatever you want.}
+\only<7>{\emph{int x} is an argument for \emph{f}. Methods, don't have to have arguments, but they are often useful.}
+\only<8>{\emph{return}: if a method says it will return a value, then it must use \code{\texttt{return}} followed by a value or variable of the type given in the method declaration.}
+\end{frame}
+
+
+\begin{frame}[fragile]{Test out some methods!}
+
+{\small
+\begin{center}
+You are making a Dungeons and Dragons game. You need two methods:
+\end{center}
+\begin{itemize}
+\item You need one method that rolls $n$ dice with $x$ sides and then totals up the result.
+\begin{semiverbatim}\code{
+public static int rollDice(int n, int x)\{ ...
+}\end{semiverbatim}
+\item You need another method that calculates the health for players with armor $a$ and health $h$ after an attack $x$. An attack hits if the attack is higher than the armor. If an attack hits, it deals $x - a$ damage.\pause
+\item BONUS: Write a method called \code{\texttt{goodfortune(int n, int x, int t)}}! It works just like \code{\texttt{rollDice(int n, int x)}} except it rerolls $t$ times and returns the highest result.
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}[fragile]{Are the following equivalent? \#2}
+
+\begin{semiverbatim}\code{\scriptsize
+Scanner s = new Scanner(System.in);
+
+String cont = s.nextLine();
+while(cont.equals("yes"))\{
+    System.out.println("Continue?");
+    cont = s.nextLine();
+\}
+\begin{center}?\end{center}
+String cont = s.nextLine();
+if(cont.equals("yes"))\{
+    do\{
+        System.out.println("Continue?");
+        cont = s.nextLine();
+    \} while (cont.equals("yes"));
+\}
+}\end{semiverbatim}
+\end{frame}
+
+
+\begin{frame}{Mini-Review}
+\begin{itemize}
+\item As of Java 7, Strings do work in Switch-Case statements! \pause
+\item Switch-case works for \code{byte}, \code{char}, \code{short}, \code{int} and \code{enum}. \pause
+\item Switch-case can only be used to check for equality (or by using \code{default} inequality). \pause
+\item A switch-case works by jumping to a case and then \emph{processing all code beneath the case} including code in other cases. To prevent this we use the keyword \code{break}. \pause
+\item Using a switch-case can save space, and works faster than if-else statements!
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Switch Case Quiz!}
+\begin{semiverbatim}\code{\small
+char c = \only<1>{'D'}\only<2>{'G'}\only<3>{'U'}\only<4>{'L'}\only<5>{'R'};
+switch(c)\{
+case 'U':
+    System.out.print("b");
+case 'D':
+    System.out.print("ear");
+    break;
+case 'L':
+    System.out.print("left");
+    break;
+case 'R':
+    System.out.print("ear");
+default:
+    System.out.print("ring");
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\subsection{Non-static Objects}
+\begin{frame}{Making Objects}
+\begin{itemize}
+\item So far we've mostly used three objects: Strings, \emph{Scanner}, and arrays.  \pause
+\item Objects are units composed of ``behavior" (methods contained in the object), and ``state" (variables contained in the object).  \pause
+\item \emph{We are objects}. We are each objects of the person class. We each have an age (\code{int}), a name (\code{string}), and a method called birthday (\code{public void Birthday()\{age ++;\}}).  \pause
+\item To create an object, you must use the \emph{new} keyword. The \emph{new} keyword allocates memory in the computer for our object, and it can also instantiate variables within the object.
+
+\end{itemize}
+\end{frame}
+\begin{frame}{Making Objects}
+\begin{itemize}
+
+    \item For example:\\
+\code{\texttt{
+Person Brian = new Person();\\
+Brian.Birthday();\\
+System.out.println(Brian.age);
+}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Constructors}
+\begin{itemize}
+\item To initialize an object we can create a \emph{constructor}. \pause
+\item Constructors for a \code{\texttt{class <name>}} look like:
+\begin{center}
+\code{\texttt{public <name>(<optionalArguments>)\{...\}}}
+\end{center}\pause
+\begin{semiverbatim}\code{
+public class Person\{
+    int age;
+    public Person()\{this.age = 0;\}
+}\end{semiverbatim} \pause
+\item Constructors are not necessary. Without one, an object will be created without setting or changing any of its variables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Constructors and Overloading}
+\begin{itemize}
+\item \emph{this} is a key word that refers to the object that a method belongs to. It can be used to find variables and methods:
+\begin{center}\code{\texttt{this.age}}\end{center} \pause
+\item Objects can have more than one constructor as long as each one has different arguments. For example:
+\begin{semiverbatim}\code{
+public class Person\{\small
+    int age;
+    String firstname=""; String lastname = "";
+    public Person()\{this.age = 0;\}
+    public Person(int age)\{this.age = age;\}
+    public Person(int age, String firstname,
+          String lastname)\{
+        this.age = 0; this.firstname = firstname;
+        this.lastname = lastname;\}
+}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{More Overloading}
+\begin{itemize}
+\item Other methods can be overloaded as well. For example:
+\begin{semiverbatim}\code{\scriptsize
+public class Person\{
+    int age;
+    String firstname=""; String lastname = "";
+    boolean married = false;
+
+    public Person()\{this.age = 0;\}
+    public Person(int age)\{this.age = age;\}
+    public Person(int age, String firstname, String lastname)\{
+        this.age = 0; this.firstname = firstname;
+        this.lastname = lastname;\}
+    marriage(String newlastname)\{
+        married = true; this.lastname = newlastname;\}
+    marriage(String newlastname, boolean append)\{
+        married = true;
+        if(append)\{
+            this.lastname += "-" + newlastname;
+        \} else \{
+            this.lastname = newlastname;
+        \}
+}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{More Overloading}
+\begin{itemize}
+\item By definition, \emph{overloading} is when we have more than one way to run a method based on what arguments are passed in.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Review: Static vs. Non-Static}
+\begin{itemize}
+\item For the time being we are going to keep everything \emph{public}.
+\item However, we can start making objects. This lets us use \emph{non-static}, instance variables and methods. \pause
+\item So far we've used a few classes that require \emph{instantiation} (e.g. Scanner, Strings, arrays) \pause
+\item \emph{Static} methods and variables do not require instantiating a class.
+\item Non static methods \emph{do} require instantiating an object, and each instance gets its own \emph{copy} of all the non-static variables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Creating an Object}
+\begin{semiverbatim}\code{
+public class Person\{
+    static int population = 0;
+    int counter = 0;
+    int ssn;
+
+    public Person(int ssn)\{
+       this.ssn = ssn;
+       population++;
+       counter ++;
+    \}
+
+    public int getSSN()\{
+       return ssn;
+    \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Instantiating an Object}
+\begin{semiverbatim}\code{
+public class PersonTest\{
+    public static void main(String[] args)\{
+        Person p = new person();
+        p.getSSN();
+    \}
+\}
+}\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Case study: Objects with a Static Variable}
+\begin{center}
+Create a static method in the Person class that returns the population variable. Next in the PersonTest class, create more than one person using a loop. How does the population change? Finally, do the same for the counter variable. Does it change?
+\end{center}
+\end{frame}
+
+\section{File I/O}
+\subsection{Review}
+\begin{frame}[fragile]{Review: Recursion Time!}
+\begin{semiverbatim}\code{
+public static int f(int n)\{
+    if(n > 0)\{return 1 + f(n-1)\} else \{return 0;\};
+\}
+}\end{semiverbatim}	
+	\pause
+\begin{itemize}
+\item $f_{n+1} = f_n + 1$ for $f_0 >= 0$
+\begin{center}What's a recursive function that returns all of the positive even numbers?\end{center} \pause
+\item $f_{n+1} = f_n + 2$ for $f_0 = 2$
+\end{itemize}
+\begin{semiverbatim}\code{
+public static int f(int n)\{
+    if(n > 0)\{return f(n-1)\textsuperscript{*}2\} else \{return 1;\};
+\}
+}\end{semiverbatim}		\pause
+\begin{itemize}
+\item $f_{n+1} = f_n ^* 2$ for $f_0 = 1$
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Review: Recursion Time!}
+\begin{semiverbatim}\code{
+public static double f(double n, int count)\{
+    if(count >= 2)\{
+        return f(n-1, count-1)/f(n-2, count-2)
+    \}
+    else if(count ==1)\{
+        return 2;
+    \}
+    else \{
+        return 1;
+    \}
+\}
+}\end{semiverbatim}		\pause
+\begin{itemize}
+\item $f_{n+1} = f_n / f_{n - 1}$ for $f_1 = 2, f_0 = 1$
+\end{itemize}
+\end{frame}
+
+
+\subsection{Getting into Files}
+\begin{frame}{What is I/O}
+\begin{itemize}
+\item I/O stand for input/output. We already have used input and output several times!
+\item \emph{System.out} is an output stream. We have used it to print to the terminal (Command Prompt). \pause
+\item \emph{System.in} is an input stream. \emph{Scanner} intercepts the input and parses it into \emph{tokens}, like a Line, Int, or Double. \pause
+\item There are many forms of input and output, like I/O with servers and clients over the internet, or file streams. \pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Motivation}
+\begin{itemize}
+\item Most games have a function that saves the state of the game, and another that loads it. \pause
+\item We will need a similar function for our games, and we will use the following classes:\\
+\code{\texttt{
+java.io.BufferedOutputStream;\\
+java.io.File;\\
+java.io.FileOutputStream;\\
+java.io.PrintWriter;\\
+java.util.Date;
+}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What do these classes do?}
+\begin{itemize}
+\item \code{\texttt{BufferedOutputStream}}: Accumulates information to be written to your computer's memory, to make your program more efficient.
+\item \code{\texttt{File}}: Holds the address(\code{\texttt{G:{\textbackslash}MyProjects{\textbackslash}file.txt}}) and other properties for a file. \pause
+\item \code{\texttt{FileOutputStream}}: writes data to a file. \pause
+\item \code{\texttt{PrintWriter}}: used for printing text to an output stream. \pause
+\item \code{\texttt{Date}}: this gives us the date. \pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Review: Importing}
+You can import them by using:\\
+
+\code{\texttt{
+import java.io.\textsuperscript{*};\\
+import java.util.\textsuperscript{*};
+}} \pause
+
+\begin{center}
+Pop Questions: What does the \textsuperscript{*} (star) do? \pause\\
+Do we have to import? \\\pause
+Where do imports go?
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Some File Code}
+\begin{semiverbatim}\code{
+
+public File f;
+
+public boolean openDiary() \{
+    if(!f.exists()) \{
+        try\{
+            if (!f.createNewFile())\{
+                return false;
+            \}
+        \} catch(IOException e)\{
+            e.printStackTrace();
+            return false;
+        \}
+    \}
+}\end{semiverbatim}		
+\end{frame}
+
+
+\begin{frame}[fragile]{Example Output Stream}
+\begin{semiverbatim}\code{
+try \{
+    this.f = new File("G:/MyProject/text.txt")
+	FileOutputStream fos = new
+          FileOutputStream(f, true);
+	BufferedOutputStream bos = new
+BufferedOutputStream(fos);
+	pw = new PrintWriter(bos);
+\} catch (FileNotFoundException e) \{
+	e.printStackTrace();
+\}
+Date d= new Date();
+pw.write("Today's date is: " + d.toString()+ ".{\textbackslash}n");
+//pw.flush();
+pw.close();
+}\end{semiverbatim}		
+\end{frame}
+
+\begin{frame}{Before Lunch Challenge}
+\begin{center}
+You have two options. Either \emph{create a diary application that appends (concatenates) and saves text that you put in with the date into a file on your flash drive}, or \emph{start creating a file saving system for your RPG or other project. We will go over how to open files after lunch. Confirm that it is saving correctly by opening the file using notepad.}
+\end{center}
+
+\end{frame}
+

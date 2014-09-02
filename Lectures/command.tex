@@ -1,0 +1,50 @@
+\usepackage{graphicx, epstopdf}
+
+%For centering images in tables.
+\usepackage[export]{adjustbox}
+
+%For multiple rows and columns in tables
+\usepackage{multicol,multirow}
+
+%For rotating text at angles
+\usepackage{rotating}
+
+%For diagonal fractions
+\usepackage{xfrac}
+
+%American Mathematical Society packages
+\usepackage{amsfonts,amsmath}
+
+%For drawing figures and such
+\usepackage{tikz}
+
+\usetheme{myTheme}
+\usecolortheme{myTheme}
+
+
+\newcommand\code[1]{%
+{\color{white}#1}%
+}
+
+\newcommand\incode[1]{%
+    \textcolor{\texttt{white}}{#1}%
+}
+
+\newcommand\addcorners[2]{%
+    \tikz[overlay,remember picture] \node[anchor=text](#1){#2}; \phantom{#2}%
+}
+
+\newcommand\addcornersc[2]{%
+    \hspace*{\fill}%
+    \tikz[overlay,remember picture] \node[anchor=base, align=center](#1) at (0,0){#2};%
+    \hspace*{\fill}%
+}
+
+\DeclareGraphicsExtensions{.pdf,.eps,.jpeg,.png}
+\graphicspath{{Resources/}}
+
+\newcommand{\tab}{\hspace*{.5cm}}
+
+\bibliographystyle{apalike}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+

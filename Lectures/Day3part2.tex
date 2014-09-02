@@ -1,0 +1,138 @@
+﻿
+\section{Scope and Diary Example}
+\subsection{Scope}
+
+\begin{frame}[fragile]{Review}
+\begin{itemize}
+\item So far we've talked about \emph{scope} as being where a variable exists. \pause
+\item A variable exists in the \emph{block} of code where it was \emph{declared}. \pause
+\item A declared variable with the same name as another variable in a different block of code is not the same. \pause
+\begin{semiverbatim}\code{ \small
+while (true)\{
+    int a = 5;
+    do\{
+         int a = 6;
+         System.out.println(a); //Prints 6
+    \}while(false);
+    System.out.println(a); //Prints 5
+\}
+}\end{semiverbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What is Printed?}
+\begin{semiverbatim}\code{\small
+int x = 5;\only<5>{//this.x = 5}
+int y = 7;
+public void doStuff(int x) \{ //A 3 is passed in.
+   y = 0; \only<3>{//this.y = 0}
+   int y = 8;
+   y = 7; \only<2>{//y = 7}\only<1>{
+   System.out.print(y);}\only<2>{
+   System.out.print(this.y);}
+   int z = x; \only<4>{//z = 3}\only<3>{
+   System.out.print(z);}\only<4>{
+   System.out.print(this.x);}
+   for (int j = 0; j < 4; j++) \{
+      x = this.y; \only<6>{//x = this.y = 0}\only<5>{
+      System.out.print(x);}
+      z += x + 1;
+   \}\only<6>{
+   System.out.print(j);} \only<7>{//Error!}\only<7>{
+   System.out.print(z);} \only<8>{//z = 7}
+\}
+}\end{semiverbatim}
+
+\end{frame}
+
+
+\begin{frame}{Public vs Non-Public Classes}
+\begin{itemize}
+\item \code{Public:} Visible to all classes in all packages. The name of the class must be the same as the name of the file.
+\item \code{No Modifier:} Visible only to classes in the same package. The name of the class does not have to be the same as the name of the file.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Public, Protected, and Private Variables and Methods}
+\begin{itemize}
+\item \code{Public:} The variable or method can be seen by all classes in all packages.
+\item \code{Private:} The variable can only be seen by the class.
+\item \code{Protected:} The variable can be seen by all classes in the same package, and all \emph{subclasses} (we will see this tomorrow).
+\item \code{No Modifier:} The variable can be seen by all classes in the same package, but not \emph{subclasses} (we will see this tomorrow).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Easy Table for Memory}
+\begin{center}
+\begin{tabular}{|r|c|c|c|c|} \hline
+\rotatebox[origin=c]{-45}{Modifier} & \rotatebox[origin=c]{-90}{Class} & \rotatebox[origin=c]{-90}{Package} & \rotatebox[origin=c]{-90}{Subclass} & \rotatebox[origin=c]{-90}{Other Packages}\\ \hline
+public &Y &	Y &	Y &	Y\\ \hline
+protected &	Y &	Y &	Y &	N\\ \hline
+no modifier &Y &Y &	N & N\\ \hline
+private & Y & N & N & N \\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Reading from a file}
+\begin{semiverbatim}\code{\small
+public String read()\{
+   try \{
+      BufferedReader reader = new 
+            BufferedReader(new FileReader(f));
+      String line;
+      String s = "";
+      while ((line = reader.readLine()) != null) \{
+         s += line + "{\textbackslash}n";
+      \}
+      reader.close();
+      return s;
+   \} catch (Exception e) \{
+      return null;
+   \}
+\}
+}\end{semiverbatim}
+
+\end{frame}
+
+\begin{frame}{Extending the Diary Example}
+\begin{center}
+Online is a copy of the source code for the diary example. Download it, and try it out. Depending on what version you use there's also some GUI classes begin used! Update your game or project such that it loads information from a file.
+\end{center}
+\end{frame}
+
+\section{Bonus}
+\subsection{Sneak Peak \#2}
+\begin{frame}[fragile]{Code for an NPC}
+\begin{semiverbatim}\code{
+import world.\textsuperscript{*}
+public class SimpleNPC extends SimpleSolid\{
+   private boolean right = false;
+
+   public SimpleNPC() \{
+      //A red 16x16 square.
+      this.setImage(0xFFFF0000, 16, 16);
+   \}
+
+   public char id() \{
+      return 'P';
+   \}
+}\end{semiverbatim}
+\end{frame} 
+\begin{frame}[fragile]{Code for an NPC}
+\begin{semiverbatim}\code{
+   public void collision(SimpleObject s) \{
+      right = !right;
+   \}
+
+   public void update() \{
+      if (right) \{
+         this.moveCell(1, 0, 10 ,true);
+      \} else \{
+         this.moveCell(-1, 0, 10 ,true);
+      \}
+   \}
+\}
+}\end{semiverbatim}
+\end{frame} 
